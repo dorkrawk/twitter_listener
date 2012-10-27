@@ -1,12 +1,13 @@
 require 'sinatra'
 require 'tweetstream'
 require 'httparty'
+require_relative 'accounts'
 
 $stdout.sync = true    # this exists so I'll get output from Sinatra
 
 class TweetCredit
 	include HTTParty
-  base_uri 'http://localhost:3000'
+  base_uri ENV["BCU_SITE_BASE"]
 end
 
 TweetStream.configure do |config|
@@ -17,20 +18,11 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-Twitter.configure do |config|
-	config.consumer_key       = ENV["CONSUMER_KEY"] 
-  config.consumer_secret    = ENV["CONSUMER_SECRET"] 
-  config.oauth_token        = ENV["OAUTH_TOKEN"] 
-  config.oauth_token_secret = ENV["OAUTH_TOKEN_SECRET"]
-end
-
-puts "in Sinatra app"
+accounts = Accounts.new
+users = accounts.get_user_ids
+artists = accounts.get_artists
 
 client = TweetStream::Client.new
-usernames = ['bigcoreustest', 'dorkrawk']
-users = usernames.collect{ |u| Twitter.user(u).id }
-puts "the users array is now: #{users}"
-artists = ['americanautumn', 'bigcoreus']
 
 client.follow(users) do |status|
 	if status.user_mentions.length > 0
@@ -50,5 +42,3 @@ client.follow(users) do |status|
 		end
 	end
 end
-
-puts "should have just POSTed"
