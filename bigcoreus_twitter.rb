@@ -19,12 +19,14 @@ TweetStream.configure do |config|
 end
 
 accounts = Accounts.new
+client = TweetStream::Client.new
+
+
 users = accounts.get_user_ids
 artists = accounts.get_artists
 
-client = TweetStream::Client.new
-
 client.follow(users) do |status|
+	puts users
 	if status.user_mentions.length > 0
 		mentions = status.user_mentions.collect{ |m| m.screen_name }
 		mentions.each do |m|
@@ -42,3 +44,4 @@ client.follow(users) do |status|
 		end
 	end
 end
+
