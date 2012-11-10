@@ -4,7 +4,7 @@ require_relative 'twitter_listener'
 
 $stdout.sync = true    # this exists so I'll get output from Sinatra
 
-listener_researt_period = 1 * 60 # 15 minutes
+listener_researt_period = 15 * 60 # 15 minutes
 
 EM.run do 
 	client = TwitterListener.new
