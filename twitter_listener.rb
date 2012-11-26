@@ -26,6 +26,8 @@ class TwitterListener
 		artists = @accounts.get_artists
 		@client.follow(users) do |status|
 			@events.mention_artist?(status, artists)
+			@events.retweet_artist?(status, artists)
+
 		end
 	end
 
