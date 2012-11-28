@@ -28,13 +28,13 @@ class Accounts
 		# update Twitter db
 		#new_user_accounts = @bcu_db.select(:account_username, :user_id).from(:user_service_accounts).where{(service_id = @twitter_service_id) & (updated_at > @last_update)}
 		user_accounts = @bcu_db.select(:account_username).from(:user_service_accounts){service_id = @twitter_service_id} # pull from Twitter db
-		user_accounts.all.map { |a| Twitter.user(a[:account_username]).id if user_exists?(a[:account_username]) }
+		user_accounts.all.map { |a| Twitter.user(a[:account_username]).id unless a[:account_username].length == 0 }
 	end
 
 	def get_artists
 		# update Twitter db
 		artist_accounts = @bcu_db.select(:account_username).from(:artist_service_accounts){service_id = @twitter_service_id} # pull from Twitter db
-		artist_accounts.all.map { |a| a[:account_username] if user_exists?(a[:account_username]) }
+		artist_accounts.all.map { |a| a[:account_username] unless a[:account_username].length == 0 }
 	end
 
 	def user_exists?(username)
