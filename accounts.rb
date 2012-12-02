@@ -15,8 +15,8 @@ class Accounts
 	def initialize
 		bcu_db_type = ENV["BCU_DB_TYPE"]
 		bcu_db_location = ENV["BCU_DB_LOCATION"]
-		listener_db_type = ENV["LISTENER_DB_TYPE"]
-		listener_db_location = ENV["LISTENER_DB_LOCATION"]
+		#listener_db_type = ENV["LISTENER_DB_TYPE"]
+		#listener_db_location = ENV["LISTENER_DB_LOCATION"]
 
 		@bcu_db = Sequel.connect("#{bcu_db_type}://#{bcu_db_location}")
 		#@listener_db = Sequel.connect("#{listener_db_type}://#{listener_db_location}")
