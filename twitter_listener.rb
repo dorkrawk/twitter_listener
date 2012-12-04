@@ -26,10 +26,12 @@ class TwitterListener
 		puts users
 		artists = @accounts.get_artists
 		puts artists
+		puts "about to start follow loop"
 		@client.follow(users) do |status|
+			puts "ok now in the twitter follow loop"
 			@events.mention_artist?(status, artists)
 			@events.retweet_artist?(status, artists)
-
+			puts "now at the end of the loop, it should restart"
 		end
 	end
 
