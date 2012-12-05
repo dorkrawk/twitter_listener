@@ -12,22 +12,22 @@ TweetStream.configure do |config|
   config.auth_method        = :oauth
 end
 
-class TweetStream::Daemon
-  def start(path, query_parameters = {}, &block) #:nodoc:
-    # Because of a change in Ruvy 1.8.7 patchlevel 249, you cannot call anymore
-    # super inside a block. So I assign to a variable the base class method before
-    # the Daemons block begins.
-    startmethod = super.start
-    Daemons.run_proc(@app_name || 'tweetstream', :multiple => true, :no_pidfiles => true) do
-      startmethod(path, query_parameters, &block)
-    end
-  end
-end
+# class TweetStream::Daemon
+#   def start(path, query_parameters = {}, &block) #:nodoc:
+#     # Because of a change in Ruvy 1.8.7 patchlevel 249, you cannot call anymore
+#     # super inside a block. So I assign to a variable the base class method before
+#     # the Daemons block begins.
+#     startmethod = super.start
+#     Daemons.run_proc(@app_name || 'tweetstream', :multiple => true, :no_pidfiles => true) do
+#       startmethod(path, query_parameters, &block)
+#     end
+#   end
+# end
 
 class TwitterListener
 
 	def initialize
-		@client = TweetStream::Daemon.new
+		@client = TweetStream::Client.new
 		@accounts = Accounts.new
 		@events = Events.new
 	end
