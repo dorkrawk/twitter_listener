@@ -23,7 +23,11 @@ class TwitterListener
 	def restart
 		@client.stop_stream
 		users = @accounts.get_user_ids
+		puts "users ****************"
+		puts users
 		artists = @accounts.get_artists
+		puts "artists *****************"
+		puts artists
 		@client.follow(users) do |status|
 			@events.mention_artist?(status, artists)
 			@events.retweet_artist?(status, artists)
