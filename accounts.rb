@@ -32,7 +32,7 @@ class Accounts
 
 	def get_artists
 		artist_accounts = @bcu_db.select(:account_username).from(:artist_service_accounts){service_id = @twitter_service_id} # pull from Twitter db
-		artist_accounts.all.map { |a| a[:account_username] unless a[:account_username].length == 0 }
+		artist_accounts.all.map { |a| a[:account_username].downcase unless a[:account_username].length == 0 }
 	end
 
 	def user_exists?(username)
