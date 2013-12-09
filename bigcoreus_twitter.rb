@@ -5,17 +5,19 @@ require_relative 'twitter_listener'
 module BigCoreUsTwitterListener
   class App < Sinatra::Base
     $stdout.sync = true    # this exists so I'll get output from Sinatra
+    $logger = Logger.new('logs/bcu_twitter.log')
 
     listener_researt_period = 15 * 60 # 15 minutes
 
     EM.run do 
     	client = TwitterListener.new
-    	puts "starting Twitter listener..."
+      puts ":: Starting BigCoreUs Twitter Listener ::"
+      $logger.info "Starting Twitter Listener"
     	client.restart
-    	puts "listening to Twitter..."
+    	$logger.info "now listening to Twitter..."
 
     	EM::PeriodicTimer.new(listener_researt_period) do 
-    		puts "restarting Twitter listener"
+    		$logger.info "Restarting Twitter Listener"
     		client.restart
     	end
     end

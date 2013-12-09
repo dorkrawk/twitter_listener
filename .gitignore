@@ -6,3 +6,4 @@
 .DS_Store
 
 heroku_env.rb
+logs/*
